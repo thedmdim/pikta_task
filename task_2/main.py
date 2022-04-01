@@ -13,7 +13,11 @@ class IFNS:
                    'ifns': str(self.ifns_code),
                    'oktmmf': str(self.oktmo),
                    }
-        response = requests.post("https://service.nalog.ru/addrno-proc.json", data=payload)
+        try:
+            response = requests.post("https://service.nalog.ru/addrno-proc.json", data=payload)
+        except ConnectionError:
+            return "Connection error"
+
         if response.status_code != 200:
             return response.status_code
         else:
